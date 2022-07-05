@@ -1,0 +1,17 @@
+.form_control {
+    display: flex;
+    
+    label {
+        margin-bottom: .6em;
+    }
+
+    input {
+        padding: .7em;
+        border-radius: 0;
+        border: none;
+    }
+
+    input::placeholder {
+        color: #7b7b7b;
+    }
+}
