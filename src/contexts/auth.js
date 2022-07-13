@@ -1,10 +1,7 @@
-
 import { createContext, useEffect, useState } from "react";
 import { app } from "../services/firebaseConfig";
 import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { Navigate } from 'react-router-dom';
-
 
 export const AuthContext = createContext({})
 
@@ -34,8 +31,7 @@ export const AuthProvider = ({ children }) => {
         loadStorageAuth();
     }, [])
 
-    const signIn = (email, password) => {     
-        setUser("teste");   
+    const signIn = (email, password) => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -51,35 +47,16 @@ export const AuthProvider = ({ children }) => {
             });
     }
 
+    function signOut() {
+        sessionStorage.clear()
+        setUser(null);
 
-    // const signInGoogle = () => {
-    //     signInWithPopup(auth, provider)
-    //         .then((result) => {
-    //             const credential = GoogleAuthProvider.credentialFromResult(result);
-    //             const token = credential.accessToken;
-    //             const user = result.user;
-    //             setUser(user);
-    //             sessionStorage.setItem("@AuthFirebase:token", token);
-    //             sessionStorage.setItem("@AuthFirebase:user", JSON.stringify(user));
-    //         })
-    //         .catch((error) => {
-    //             const errorCode = error.code;
-    //             const errorMessage = error.message;
-    //             const email = error.customData.email;
-    //             const credential = GoogleAuthProvider.credentialFromError(error);
-    //         });
-    // };
+        return window.location.reload();
+    }
 
-    // function signOut() {
-    //     sessionStorage.clear()
-    //     setUser(null);
-
-    //     return window.location.reload();
-    // }
-
-    return (//se não tiver usuário retorna falso, se tiver retorna true.
+    return (
         <AuthContext.Provider
-            value={{ signIn, signed: !!user, user }}>
+            value={{ signIn, signed: !!user, signOut }}>
             {children}
         </AuthContext.Provider>
     )

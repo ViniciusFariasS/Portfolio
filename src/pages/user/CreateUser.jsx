@@ -28,7 +28,7 @@ export default function CreateUser() {
                         Age: user.age,
                         Email: user.email,
                         Uid: user.uid
-                    });                    
+                    });                  
                 } catch (e) {
                     console.error("Error adding document: ", e);
                 }
